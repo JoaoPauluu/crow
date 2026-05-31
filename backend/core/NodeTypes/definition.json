@@ -1,0 +1,9 @@
+{
+    "description": "A node representing a mathematical definition, including its statement.",
+    "fields": {
+        "statement": {
+            "type": "string",
+            "description": "The formal statement of the definition."
+        }
+    }
+}

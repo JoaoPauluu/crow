@@ -1,5 +1,5 @@
-from project import Project
-from data_nodes import Node
+#from core.project import Project
+from core.data_nodes import Node
 from typing import Optional
 from pathlib import Path
 

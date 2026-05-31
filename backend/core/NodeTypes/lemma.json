@@ -1,0 +1,13 @@
+{
+    "description": "A node representing a mathematical lemma, including its statement and proof.",
+    "fields": {
+        "statement": {
+            "type": "string",
+            "description": "The formal statement of the lemma."
+        },
+        "proof": {
+            "type": "string",
+            "description": "The proof of the lemma."
+        }
+    }
+}
