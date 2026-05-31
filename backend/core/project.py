@@ -1,5 +1,5 @@
-from data_nodes import Node
-from loader import Loader
+from core.data_nodes import Node
+from core.loader import Loader
 from typing import Optional
 
 

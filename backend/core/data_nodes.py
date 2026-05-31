@@ -5,7 +5,7 @@ from typing import Optional, Literal
 import json
 import uuid
 
-from project import Project
+#from core.project import Project
 
 def name_to_file_path(name: str) -> str:
     return name.lower().replace(" ", "_") + ".crw"

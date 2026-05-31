@@ -1,5 +1,14 @@
-from data_nodes import Node
-from project import Project
+from core.data_nodes import Node
+from core.project import Project
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+@app.get("/node")
 
 def main():
     ##node = Node.from_crw_file("S:/crow_project_example/node_example.crw")
