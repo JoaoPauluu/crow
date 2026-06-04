@@ -6,6 +6,10 @@ from pathlib import Path
 import json
 import uuid
 
+<<<<<<< HEAD
+=======
+#from core.project import Project
+>>>>>>> 659dac7136be7f835bf9a151adc4f6c6abc9cfcf
 
 def name_to_file_path(name: str) -> str:
     #MUST IMPLEMENT CHECKING FOR DUPLICATES TO NOT ERASE FILES!!!

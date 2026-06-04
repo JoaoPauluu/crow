@@ -1,5 +1,3 @@
-from platform import node
-
 from core.data_nodes import Node
 from core.project import Project
 
