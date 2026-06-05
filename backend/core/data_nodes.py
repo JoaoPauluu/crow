@@ -6,21 +6,10 @@ from pathlib import Path
 import json
 import uuid
 
-<<<<<<< HEAD
-=======
-#from core.project import Project
->>>>>>> 659dac7136be7f835bf9a151adc4f6c6abc9cfcf
 
 def name_to_file_path(name: str) -> str:
     #MUST IMPLEMENT CHECKING FOR DUPLICATES TO NOT ERASE FILES!!!
     return name.lower().replace(" ", "_") + ".crw"
-
-def get_node_types() -> list[str]:
-    node_types_path = Path(__file__).parent / "NodeTypes"
-    node_type_files = node_types_path.glob("*.json")
-    node_types = [f.stem for f in node_type_files]  
-    return node_types
-
 
 
 class NodeHeader(BaseModel):
@@ -61,13 +50,13 @@ class Node(BaseModel):
             self.relative_file_path = name_to_file_path(self.header.name)
         return self
     
-    @model_validator(mode="before")
-    def validate_node_type(cls, data: dict) -> dict:
-        node_type = data.get("header", {}).type
-        node_types = get_node_types()
-        if node_type not in node_types:
-            raise ValueError(f"Invalid node type: {node_type}. Must be one of: {', '.join(node_types)}")
-        return data
+    # @model_validator(mode="before")
+    # def validate_node_type(cls, data: dict) -> dict:
+    #     node_type = data.get("header", {}).type
+    #     node_types = get_node_types()
+    #     if node_type not in node_types:
+    #         raise ValueError(f"Invalid node type: {node_type}. Must be one of: {', '.join(node_types)}")
+    #     return data
 
     def append_child(self, child_node: 'Node'):
         if child_node.id not in self.connections.children:

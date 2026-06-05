@@ -1,5 +1,7 @@
 #from core.project import Project
+from backend.core.project import Project
 from core.data_nodes import Node
+from core.data_nodes_types import NodeType
 from typing import Optional
 from pathlib import Path
 
@@ -28,4 +30,18 @@ class Loader:
 
         return nodes
     
+    @classmethod
+    def load_node_type(cls, file_path: str) -> 'NodeType':
+        return NodeType.from_json_file(file_path)
     
+    @classmethod
+    def load_default_node_types(cls) -> list['NodeType']:
+        default_nodes_dir = Path(__file__).parent / "default_nodes"
+        return [cls.load_node_type(str(file)) for file in Path(default_nodes_dir).rglob("*.json")]
+    
+    @classmethod
+    def load_custom_node_types(cls, project: 'Project') -> list['NodeType']:
+        custom_nodes_dir = Path(project.directory) / "custom_nodes"
+        if not custom_nodes_dir.exists():
+            return []
+        return [cls.load_node_type(str(file)) for file in custom_nodes_dir.rglob("*.json")]
