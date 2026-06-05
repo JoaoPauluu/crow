@@ -1,10 +1,10 @@
-#from core.project import Project
-from backend.core.project import Project
 from core.data_nodes import Node
 from core.data_nodes_types import NodeType
-from typing import Optional
+from typing import TYPE_CHECKING
 from pathlib import Path
 
+if TYPE_CHECKING:
+    from core.project import Project
 
 
 class Loader:

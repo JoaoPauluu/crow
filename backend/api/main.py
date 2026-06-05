@@ -1,4 +1,4 @@
-from core.data_nodes import Node
+from core.data_nodes import Node, NodeHeader, NodeContent, NodeMeta
 from core.project import Project
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -41,6 +41,24 @@ def get_all_nodes():
 
     nodes = state.project.loaded_nodes
     return {"nodes": [{"node_id": node.id, "node_header": node.header, "node_content": node.content} for node in nodes]}
+
+class CreateNodeRequest(BaseModel):
+    header: NodeHeader
+    content: NodeContent
+    meta: NodeMeta
+
+@app.post("/node")
+def create_node(node_data: CreateNodeRequest):
+    if state.project is None:
+        return {"error": "No project loaded"}
+
+    try:
+        node = Node.new_node_from_dict(node_data.model_dump())
+        node.save(state.project.directory)
+        state.project.loaded_nodes.append(node)
+        return {"message": "Node created successfully", "node_id": node.id}
+    except Exception as e:
+        return {"error": f"Failed to create node: {str(e)}"}
 
 @app.get("/node/{node_id}")
 def get_node(node_id: str):
