@@ -10,7 +10,7 @@ function NodeList({ setSelectedNode }: NodeListProps) {
     useEffect(() => {
         const fetchNodes = async () => {
             try {
-                const response = await fetch("http://localhost:8000/node");
+                const response = await fetch("http://localhost:8000/nodes");
                 const data = await response.json();
                 setNodes(data);
             } catch (error) {

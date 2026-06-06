@@ -34,7 +34,7 @@ def unload_project():
     return {"message": "Project unloaded successfully"}
 
 
-@app.get("/node")
+@app.get("/nodes")
 def get_all_nodes():
     if state.project is None:
         return {"error": "No project loaded"}
