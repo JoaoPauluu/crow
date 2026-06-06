@@ -1,12 +1,19 @@
 import ListGroup from "./ListGroup";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
 
 
 interface NodeListProps {
     setSelectedNode: (id: string) => void;
 }
 
+interface Node {
+    id: string;
+    name: string;
+}
+
 function NodeList({ setSelectedNode }: NodeListProps) {
+    const [nodes, setNodes] = useState<Node[]>([]);
+
     useEffect(() => {
         const fetchNodes = async () => {
             try {
@@ -21,9 +28,8 @@ function NodeList({ setSelectedNode }: NodeListProps) {
         fetchNodes();
     }, [])
 
-    const [nodes, setNodes] = useState([]);
     const reduced_nodes = nodes.map((node) => {
-        return {id: node.id, name: node.name, OnClick() {setSelectedNode(node.id)}}
+        return {id: node.id, name: node.name, OnClick(event: MouseEvent) {setSelectedNode(node.id)}}
     })
 
 

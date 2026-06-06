@@ -1,7 +1,7 @@
 import { useState, type MouseEvent } from "react";
 
 interface ListGroupItem {
-    id: number;
+    id: string;
     name: string;
     OnClick?: (event: MouseEvent) => void;
 }
@@ -14,7 +14,7 @@ interface ListGroupProps {
 
 
 function ListGroup({ listName = "", items }: ListGroupProps) {
-    const [selectedIndex, setSelectedIndex] = useState(-1);
+    const [selectedIndex, setSelectedIndex] = useState("");
 
 
     const GenerateItem = (item:ListGroupItem) => {

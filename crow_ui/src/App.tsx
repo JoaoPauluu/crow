@@ -1,5 +1,6 @@
-import ListGroup from "./components/ListGroup";
+//import ListGroup from "./components/ListGroup";
 import NodeInterface from "./components/NodeInterface";
+import NodesList from "./components/NodesList";
 import { type MouseEvent , useState} from "react";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
 
   return (
     <div>
-      <NodeList setSelectedNode={setSelectedNode} />
+      <NodesList setSelectedNode={setSelectedNode} />
       <NodeInterface nodeId={selectedNode} />
     </div>
   )
