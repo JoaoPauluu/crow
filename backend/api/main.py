@@ -40,7 +40,7 @@ def get_all_nodes():
         return {"error": "No project loaded"}
 
     nodes = state.project.loaded_nodes
-    return {"nodes": [{"node_id": node.id, "node_header": node.header, "node_content": node.content} for node in nodes]}
+    return [{"node_id": node.id, "node_header": node.header, "node_content": node.content} for node in nodes]
 
 class CreateNodeRequest(BaseModel):
     header: NodeHeader
