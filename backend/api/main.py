@@ -1,8 +1,9 @@
-from core.data_nodes import Node, NodeHeader, NodeContent, NodeMeta
+from core.data_nodes import Node, NodeConnections, NodeHeader, NodeContent, NodeMeta, CamelModel
 from core.project import Project
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
 
 app = FastAPI()
 
@@ -28,11 +29,12 @@ state = AppState()
 state.project = Project(directory="S:/crow_project_example")
 
 
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
-class LoadProjectRequest(BaseModel):
+class LoadProjectRequest(CamelModel):
     project_directory: str
 
 @app.post("/action/load_project")
@@ -54,9 +56,9 @@ def get_all_nodes():
         return {"error": "No project loaded"}
 
     nodes = state.project.loaded_nodes
-    return [{"node_id": node.id, "node_header": node.header, "node_content": node.content} for node in nodes]
+    return [{"id": node.id, "header": node.header, "content": node.content} for node in nodes]
 
-class CreateNodeRequest(BaseModel):
+class CreateNodeRequest(CamelModel):
     header: NodeHeader
     content: NodeContent
     meta: NodeMeta
@@ -74,7 +76,16 @@ def create_node(node_data: CreateNodeRequest):
     except Exception as e:
         return {"error": f"Failed to create node: {str(e)}"}
 
-@app.get("/node/{node_id}")
+
+class getNodeRequest(CamelModel):
+    id: str
+    header:        NodeHeader
+    content:       NodeContent
+    connections:   NodeConnections
+    meta:          NodeMeta
+
+
+@app.get("/node/{node_id}", response_model=getNodeRequest)
 def get_node(node_id: str):
     if state.project is None:
         return {"error": "No project loaded"}
@@ -83,4 +94,4 @@ def get_node(node_id: str):
     if node is None:
         return {"error": "Node not found"}
 
-    return {"node_id": node.id, "node_header": node.header, "node_content": node.content}
+    return {"id": node.id, "header": node.header, "content": node.content, "connections": node.connections, "meta": node.meta}

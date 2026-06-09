@@ -1,10 +1,17 @@
 from datetime import datetime, timezone
 from os import name
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic.alias_generators import to_camel
 from typing import Optional, Literal, Any
 from pathlib import Path
 import json
 import uuid
+
+class CamelModel(BaseModel):
+    model_config = ConfigDict(
+        alias_generator = to_camel,
+        populate_by_name = True
+        )
 
 
 def name_to_file_path(name: str) -> str:
@@ -12,28 +19,28 @@ def name_to_file_path(name: str) -> str:
     return name.lower().replace(" ", "_") + ".crw"
 
 
-class NodeHeader(BaseModel):
+class NodeHeader(CamelModel):
     name: str
     type: str
     tags: list[str] = []
 
-class NodeContent(BaseModel):
+class NodeContent(CamelModel):
     base_content: list[Any] = []
     specific_content: list[Any] = []
 
-class NodeConnections(BaseModel):
+class NodeConnections(CamelModel):
     parents:  list[str] = []
     children: list[str] = []
     lateral:  list[str] = []
 
-class NodeMeta(BaseModel):
+class NodeMeta(CamelModel):
     author: str = ""
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 
-class Node(BaseModel):
+class Node(CamelModel):
     file_type: str = "crw"
     version: str = "1.0"
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
