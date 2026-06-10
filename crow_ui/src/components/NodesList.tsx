@@ -8,7 +8,9 @@ interface NodeListProps {
 
 interface Node {
     id: string;
-    name: string;
+    header: {
+        name: string;
+    };
 }
 
 function NodeList({ setSelectedNode }: NodeListProps) {
@@ -29,7 +31,7 @@ function NodeList({ setSelectedNode }: NodeListProps) {
     }, [])
 
     const reduced_nodes = nodes.map((node) => {
-        return {id: node.id, name: node.name, OnClick(event: MouseEvent) {setSelectedNode(node.id)}}
+        return {id: node.id, name: node.header.name, OnClick(event: MouseEvent) {setSelectedNode(node.id)}}
     })
 
 
