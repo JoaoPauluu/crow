@@ -1,37 +1,23 @@
 import ListGroup from "./ListGroup";
-import { useState, useEffect, type MouseEvent } from "react";
+import useNodes from "../hooks/useNodes";
 
 
 interface NodeListProps {
     setSelectedNode: (id: string) => void;
 }
 
-interface Node {
-    id: string;
-    header: {
-        name: string;
-    };
-}
 
 function NodeList({ setSelectedNode }: NodeListProps) {
-    const [nodes, setNodes] = useState<Node[]>([]);
-
-    useEffect(() => {
-        const fetchNodes = async () => {
-            try {
-                const response = await fetch("http://localhost:8000/nodes");
-                const data = await response.json();
-                setNodes(data);
-            } catch (error) {
-                console.error("Error fetching nodes:", error);
-            }
-        };
-
-        fetchNodes();
-    }, [])
+    const { isPending, error, data: nodes } = useNodes()
+    if (isPending) {
+        return <h1>Loading nodes...</h1>
+    }
+    if (error) {
+        return <h1>Something went wrong when loading the nodes: {error.message}</h1>
+    }
 
     const reduced_nodes = nodes.map((node) => {
-        return {id: node.id, name: node.header.name, OnClick(event: MouseEvent) {setSelectedNode(node.id)}}
+        return {id: node.id, name: node.header.name, OnClick() {setSelectedNode(node.id)}}
     })
 
 

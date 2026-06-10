@@ -29,4 +29,10 @@ interface NodeData {
     connections: NodeConnections;
 }
 
-export type { NodeHeader, NodeContent, NodeMeta, NodeData, NodeConnections};
+interface ShortNodeData {
+    id:string;
+    header: NodeHeader;
+    connections:NodeConnections
+}
+
+export type { NodeHeader, NodeContent, NodeMeta, NodeData, NodeConnections, ShortNodeData};

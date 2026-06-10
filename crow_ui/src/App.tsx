@@ -2,16 +2,19 @@
 import NodeInterface from "./components/NodeInterface";
 import NodesList from "./components/NodesList";
 import { type MouseEvent , useState} from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+const queryClient = new QueryClient()
 
 function App() {
   //const items_list_2 = [{ id: 1, name: "test4" }, { id: 2, name: "test5" }, { id: 3, name: "test6" }];
   const [selectedNode, setSelectedNode] = useState<string>("");
 
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <NodesList setSelectedNode={setSelectedNode} />
       <NodeInterface nodeId={selectedNode} />
-    </div>
+    </QueryClientProvider>
   )
 }
 
